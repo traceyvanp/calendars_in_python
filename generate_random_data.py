@@ -33,6 +33,11 @@ def random_date(start, end):
 #create a dictionary of random lists
 df = pd.DataFrame({'product': product, 'amount':amount, 'period':period, 'start_date':start_date})
 
+#add end_date to dataframe
+df['end_date'] = df['start_date'] + pd.TimedeltaIndex(df['period'], unit='M')
+
+#df.to_csv("data.csv")
+
     
 
 #random.randint(0,5)
