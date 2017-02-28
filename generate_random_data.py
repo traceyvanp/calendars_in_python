@@ -31,8 +31,7 @@ def random_date(start, end):
     return start + timedelta(days=randint(0, 365))
 
 #create a dictionary of random lists
-dict = [product, amount, start_date, period]
-df = pd.DataFrame.from_dict(dict)
+df = pd.DataFrame({'product': product, 'amount':amount, 'period':period, 'start_date':start_date})
 
     
 
