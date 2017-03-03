@@ -36,12 +36,8 @@ df = pd.DataFrame({'product': product, 'amount':amount, 'period':period, 'start_
 #add end_date to dataframe
 df['end_date'] = df['start_date'] + pd.TimedeltaIndex(df['period'], unit='M')
 
-#df.to_csv("data.csv")
+
+#generate a csv from the dataframe
+df.to_csv("data.csv")
 
     
-
-#random.randint(0,5)
-#random.choice(['red', 'black', 'green'])
-#random.choice(myList)
-#random.shuffle(list)
-#random.randrange(start, stop[,step])
