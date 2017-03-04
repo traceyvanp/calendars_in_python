@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>Random</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>name</key>
+			<string>root@127.0.0.1</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>latin1</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGJCVYJHZlcnNpb25YJG9iamVjdHNZJGFy
+			Y2hpdmVyVCR0b3ASAAGGoKgHCBMUFRYaIVUkbnVsbNMJCgsMDxJX
+			TlMua2V5c1pOUy5vYmplY3RzViRjbGFzc6INDoACgAOiEBGABIAF
+			gAdUdHlwZVRyb3dzXxAdU2VsZWN0aW9uRGV0YWlsVHlwZU5TSW5k
+			ZXhTZXTSFwsYGVxOU1JhbmdlQ291bnQQAIAG0hscHR5aJGNsYXNz
+			bmFtZVgkY2xhc3Nlc1pOU0luZGV4U2V0oh8gWk5TSW5kZXhTZXRY
+			TlNPYmplY3TSGxwiI1xOU0RpY3Rpb25hcnmiIiBfEA9OU0tleWVk
+			QXJjaGl2ZXLRJidUZGF0YYABAAgAEQAaACMALQAyADcAQABGAE0A
+			VQBgAGcAagBsAG4AcQBzAHUAdwB8AIEAoQCmALMAtQC3ALwAxwDQ
+			ANsA3gDpAPIA9wEEAQcBGQEcASEAAAAAAAACAQAAAAAAAAAoAAAA
+			AAAAAAAAAAAAAAABIw==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1063, 583}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>create table test_1 as (select id, amount, period, product, start_date, end_date, datediff(end_date, start_date) as 'contract_days' from random_data);
+select * from test_1;
+create table test_2 as (select id, amount, period, product, start_date, end_date, contract_days, amount/contract_days as 'amount_day' from test_1);
+
+create table test_3 as (select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '02-2016' AND date_format(end_date, '%m-%Y') &gt; '02-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '02-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '03-2016' AND date_format(end_date, '%m-%Y') &gt; '03-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '03-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '04-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '04-2016' AND date_format(end_date, '%m-%Y') &gt; '04-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '04-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '04-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '05-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '05-2016' AND date_format(end_date, '%m-%Y') &gt; '05-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '05-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '05-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '06-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '06-2016' AND date_format(end_date, '%m-%Y') &gt; '06-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '06-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '06-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '07-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '07-2016' AND date_format(end_date, '%m-%Y') &gt; '07-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '07-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '07-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '08-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '08-2016' AND date_format(end_date, '%m-%Y') &gt; '08-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '08-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '08-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '09-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '09-2016' AND date_format(end_date, '%m-%Y') &gt; '09-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '09-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '09-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '10-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '10-2016' AND date_format(end_date, '%m-%Y') &gt; '10-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '10-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '10-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '11-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '11-2016' AND date_format(end_date, '%m-%Y') &gt; '11-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '11-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '11-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '12-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '12-2016' AND date_format(end_date, '%m-%Y') &gt; '12-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '12-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '12-2016'
+
+from test_2);
+
+select * from test_3;
+
+	</string>
+			<key>table</key>
+			<string>test_3</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>200</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select * from test_3</string>
+		<string>select *, (select 01-2016 + 02-2016 as 'total' from test_3) from test_3</string>
+		<string>create table test_3 as (select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '02-2016' AND date_format(end_date, '%m-%Y') &gt; '02-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '02-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '03-2016' AND date_format(end_date, '%m-%Y') &gt; '03-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '03-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '04-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '04-2016' AND date_format(end_date, '%m-%Y') &gt; '04-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '04-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '04-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '05-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '05-2016' AND date_format(end_date, '%m-%Y') &gt; '05-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '05-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '05-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '06-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '06-2016' AND date_format(end_date, '%m-%Y') &gt; '06-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '06-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '06-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '07-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '07-2016' AND date_format(end_date, '%m-%Y') &gt; '07-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '07-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '07-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '08-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '08-2016' AND date_format(end_date, '%m-%Y') &gt; '08-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '08-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '08-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '09-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '09-2016' AND date_format(end_date, '%m-%Y') &gt; '09-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '09-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '09-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '10-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '10-2016' AND date_format(end_date, '%m-%Y') &gt; '10-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '10-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '10-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '11-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '11-2016' AND date_format(end_date, '%m-%Y') &gt; '11-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '11-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '11-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '12-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '12-2016' AND date_format(end_date, '%m-%Y') &gt; '12-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '12-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '12-2016'
+
+from test_2)</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '02-2016' AND date_format(end_date, '%m-%Y') &gt; '02-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '02-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '03-2016' AND date_format(end_date, '%m-%Y') &gt; '03-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '03-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '04-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '04-2016' AND date_format(end_date, '%m-%Y') &gt; '04-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '04-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '04-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '05-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '05-2016' AND date_format(end_date, '%m-%Y') &gt; '05-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '05-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '05-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '06-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '06-2016' AND date_format(end_date, '%m-%Y') &gt; '06-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '06-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '06-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '07-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '07-2016' AND date_format(end_date, '%m-%Y') &gt; '07-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '07-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '07-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '08-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '08-2016' AND date_format(end_date, '%m-%Y') &gt; '08-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '08-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '08-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '09-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '09-2016' AND date_format(end_date, '%m-%Y') &gt; '09-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '09-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '09-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '10-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '10-2016' AND date_format(end_date, '%m-%Y') &gt; '10-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '10-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '10-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '11-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '11-2016' AND date_format(end_date, '%m-%Y') &gt; '11-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '11-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '11-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '12-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '12-2016' AND date_format(end_date, '%m-%Y') &gt; '12-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '12-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '12-2016'
+
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '02-2016' AND date_format(end_date, '%m-%Y') &gt; '02-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '02-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '03-2016' AND date_format(end_date, '%m-%Y') &gt; '03-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '03-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '04-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '04-2016' AND date_format(end_date, '%m-%Y') &gt; '04-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '04-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '04-2016'
+
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '02-2016' AND date_format(end_date, '%m-%Y') &gt; '02-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '02-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '03-2016' AND date_format(end_date, '%m-%Y') &gt; '03-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '03-2016'
+
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '02-2016' AND date_format(end_date, '%m-%Y') &gt; '02-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '02-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '03-2016' AND date_format(end_date, '%m-%Y') &gt; '03-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '03-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '03-2016',
+
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016',
+
+case 
+	when date_format(start_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '02-2016' AND date_format(end_date, '%m-%Y') &gt; '02-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '02-2016'
+
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016'
+
+case 
+	when date_format(start_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '02-2016' AND date_format(end_date, '%m-%Y') &gt; '02-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '02-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '02-2016'
+
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	when date_format(end_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`end_date`)) - DAYOFMONTH(`end_date`)) * amount_day)
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' AND date_format(end_date, '%m-%Y') &gt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' then DAY(LAST_DAY(`start_date`))
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day),
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' then DAY(LAST_DAY(`start_date`))
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day),
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' then (DAY(LAST_DAY(`start_date`)) * amount_day)
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day)
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day),
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day),
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' then 1
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day),
+	when date_format(start_date, '%m-%Y') &lt; '01-2016' then ((DAY(LAST_DAY(`start_date`)) * amount_day)
+	else 0
+end as '01-2016'
+from test_2</string>
+		<string>select *,
+case 
+	when date_format(start_date, '%m-%Y') = '01-2016' then ((DAY(LAST_DAY(`start_date`)) - DAYOFMONTH(`start_date`)) * amount_day),
+	when ((date_format(start_date, '%m-%Y') &lt; '01-2016') and (date_format(end_date, '%m-%Y') &gt; '01-2016')) then ((DAY(LAST_DAY(`start_date`)) * amount_day)
+	else 0
+end as '01-2016'
+from test_2</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.7.13</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
